@@ -1,3 +1,4 @@
+/// General
 variable "resource_group_name" {
   default = "rg-byterraform"
 }
@@ -6,6 +7,16 @@ variable "location_name" {
   default = "uksouth"
 }
 
+variable "admin_user" {
+  default = "azureadmin"
+}
+
+variable "public_key_path" {
+  type    = string
+  default = "~/.ssh/id_rsa.pub"
+}
+
+/// Network
 variable "network_name" {
   default = "vnetwork1"
 }
@@ -14,14 +25,18 @@ variable "subnet_name" {
   default = "subnet1"
 }
 
-variable "admin_user" {
-  default = "azureadmin"
-}
-
+/// Images
 variable "vm_image" {
   default = "centos-8-stream-free"
 }
+variable "vm_image_version" {
+  default = "latest"
+}
+variable "vm_image_publisher" {
+  default = "cognosys"
+}
 
+/// VMs
 variable "vms" {
   type = map(any)
   default = {
