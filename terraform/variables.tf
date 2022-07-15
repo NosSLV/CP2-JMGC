@@ -11,27 +11,22 @@ variable "network_name" {
 }
 
 variable "subnet_name" {
-    default = "subnet1"
+  default = "subnet1"
 }
 
 variable "admin_user" {
-    default = "azureadmin"
+  default = "azureadmin"
+}
+
+variable "vm_image" {
+  default = "centos-8-stream-free"
 }
 
 variable "vms" {
-    type = list(string)
-    default = [
-        "master",
-        "worker",
-        "nfs"
-    ]
-}
-
-variable "machine_types" {
-    type = map
-    default = {
-        var.vms[0] = "Standard_D2_v2" # 7GB, 2CPU
-        var.vms[1] = "Standard_A2_v2" # 4GB, 2CPU
-        var.vms[2] = "Standard_A2_v2" # 4GB, 2CPU
-    }
+  type = map(any)
+  default = {
+    "master" = "Standard_D2_v2" # 7 GiB, 2 vCPUs
+    "nfs"    = "Standard_B2s"   # 4 GiB, 2 vCPUs
+    "worker" = "Standard_B2s"   # 4 GiB, 2 vCPUs
+  }
 }

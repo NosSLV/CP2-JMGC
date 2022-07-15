@@ -7,5 +7,5 @@ output "vm_id" {
 }
 
 output "vm_public_ip" {
-    value = azurerm_public_ip.public_ip.*.id
+  value = azurerm_public_ip.public_ip.*.id
 }
