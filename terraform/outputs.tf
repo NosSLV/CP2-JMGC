@@ -3,19 +3,21 @@ output "resource_group_id" {
 }
 
 output "vm_id" {
-  value = azurerm_linux_virtual_machine.vm.*.id
+  value = {
+    for vm, bd in azurerm_linux_virtual_machine.vm : vm => bd.id
+  }
 }
 
 output "vm_private_ip" {
   value = {
-    for nic in azurerm_network_interface.nic :
-    nic.name => nic.private_ip_address
+    for vm in azurerm_linux_virtual_machine.vm :
+    vm.computer_name => vm.private_ip_address
   }
 }
 
 output "vm_public_ip" {
   value = {
-    for ip in azurerm_public_ip.public_ip :
-    ip.name => ip.ip_address
+    for vm in azurerm_linux_virtual_machine.vm :
+    vm.computer_name => vm.public_ip_address
   }
 }

@@ -1,47 +1,57 @@
-/// General
+/// General ///
 variable "resource_group_name" {
-  default = "rg-byterraform"
+  description = "Resource Group created by Terraform for every deployed service"
+  default     = "rg-byterraform"
 }
 
 variable "location_name" {
-  default = "uksouth"
+  description = "Azure Location"
+  default     = "uksouth"
 }
 
 variable "admin_user" {
-  default = "azureadmin"
+  description = "Default admin and SSH user"
+  default     = "azureadmin"
 }
 
 variable "public_key_path" {
-  type    = string
-  default = "~/.ssh/id_rsa.pub"
+  description = "Public Key path used by VMs to allow connections from host machine"
+  type        = string
+  default     = "~/.ssh/id_rsa.pub"
 }
 
-/// Network
+/// Network ///
 variable "network_name" {
-  default = "vnetwork1"
+  description = "Azure Virtual Network name"
+  default     = "vnetwork1"
 }
 
 variable "subnet_name" {
-  default = "subnet1"
+  description = "Sub-Network name"
+  default     = "subnet1"
 }
 
-/// Images
+/// Images ///
 variable "vm_image" {
-  default = "centos-8-stream-free"
+  description = "Image to install in VMs"
+  default     = "centos-8-stream-free"
 }
 variable "vm_image_version" {
-  default = "latest"
+  description = "Version of the image to install"
+  default     = "latest"
 }
 variable "vm_image_publisher" {
-  default = "cognosys"
+  description = "Publisher of the image to install"
+  default     = "cognosys"
 }
 
-/// VMs
+/// VMs ///
 variable "vms" {
-  type = map(any)
+  description = "Machines to install and the size that every one is going to use"
+  type        = map(any)
   default = {
     "master" = "Standard_D2_v2" # 7 GiB, 2 vCPUs
-    "nfs"    = "Standard_B2s"   # 4 GiB, 2 vCPUs
     "worker" = "Standard_B2s"   # 4 GiB, 2 vCPUs
+    "nfs"    = "Standard_B2s"   # 4 GiB, 2 vCPUs
   }
 }

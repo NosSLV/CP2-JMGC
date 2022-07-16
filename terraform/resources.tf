@@ -20,22 +20,22 @@ resource "azurerm_subnet" "subnet" {
 }
 
 resource "azurerm_network_interface" "nic" {
-  count               = length(var.vms)
-  name                = "VM-NIC-${keys(var.vms)[count.index]}"
+  for_each = var.vms
+  name     = "VM-NIC-${each.key}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name                          = "ip_config-${keys(var.vms)[count.index]}"
+    name                          = "ip_config-${each.key}"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.public_ip.*.id[count.index]
+    public_ip_address_id          = azurerm_public_ip.public_ip[each.key].id
   }
 }
 
 resource "azurerm_public_ip" "public_ip" {
-  count               = length(var.vms)
-  name                = "PublicIP-${keys(var.vms)[count.index]}"
+  for_each = var.vms
+  name     = "PublicIP-${each.key}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   allocation_method   = "Dynamic"
@@ -44,14 +44,14 @@ resource "azurerm_public_ip" "public_ip" {
 
 /// VMs ///
 resource "azurerm_linux_virtual_machine" "vm" {
-  count               = length(var.vms)
-  name                = "VM-${keys(var.vms)[count.index]}"
+  for_each            = var.vms
+  name                = "VM-${each.key}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  size                = values(var.vms)[count.index]
-  admin_username      = var.admin_user
+  size                = each.value
+  admin_username = var.admin_user
   network_interface_ids = [
-    azurerm_network_interface.nic.*.id[count.index],
+    azurerm_network_interface.nic[each.key].id,
   ]
 
   admin_ssh_key {
@@ -80,8 +80,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
 /// Security Resources ///
 resource "azurerm_network_security_group" "sg" {
-  count               = length(var.vms)
-  name                = "SG-${keys(var.vms)[count.index]}"
+  for_each = var.vms
+  name     = "SG-${each.key}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -99,7 +99,7 @@ resource "azurerm_network_security_group" "sg" {
 }
 
 resource "azurerm_network_interface_security_group_association" "sg_association" {
-  count                     = length(var.vms)
-  network_interface_id      = azurerm_network_interface.nic[count.index].id
-  network_security_group_id = azurerm_network_security_group.sg[count.index].id
+  for_each                  = var.vms
+  network_interface_id      = azurerm_network_interface.nic[each.key].id
+  network_security_group_id = azurerm_network_security_group.sg[each.key].id
 }
