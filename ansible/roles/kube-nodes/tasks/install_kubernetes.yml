@@ -1,0 +1,29 @@
+- name: 'Enable Kubernetes repository: kubernetes.repo'
+  lineinfile:
+    dest: /etc/yum.repos.d/kubernetes.repo
+    line: '{{item}}'
+    state: present
+    create: yes
+  with_items:
+    - '[kubernetes]'
+    - 'name=Kubernetes'
+    - 'baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-$basearch'
+    - 'enabled=1'
+    - 'gpgcheck=1'
+    - 'gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
+    - 'exclude=kubelet kubeadm kubectl'
+
+- name: 'Installing Kubernetes'
+  dnf:
+    name:
+      - kubelet
+      - kubeadm
+      - kubectl
+    state: present
+    disable_excludes: 'kubernetes'
+
+- name: 'Enable kubelet service'
+  systemd:
+    name: kubelet
+    state: started
+    enabled: yes

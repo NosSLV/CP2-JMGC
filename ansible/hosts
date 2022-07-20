@@ -1,0 +1,6 @@
+[master]
+192.168.1.53 domain_name=kubmaster private_ip=192.168.1.53
+[workers]
+192.168.1.52 domain_name=kubworker private_ip=192.168.1.52
+[nfs]
+192.168.1.54 domain_name=nfsserver private_ip=192.168.1.54

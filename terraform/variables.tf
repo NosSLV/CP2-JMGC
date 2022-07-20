@@ -50,8 +50,17 @@ variable "vms" {
   description = "Machines to install and the size that every one is going to use"
   type        = map(any)
   default = {
-    "master" = "Standard_D2_v2" # 7 GiB, 2 vCPUs
-    "worker" = "Standard_B2s"   # 4 GiB, 2 vCPUs
-    "nfs"    = "Standard_B2s"   # 4 GiB, 2 vCPUs
+    "master" = {
+      size = "Standard_D2_v2" # 7 GiB, 2 vCPUs
+      IP   = "10.0.2.22"
+    }
+    "worker" = {
+      size = "Standard_B2s" # 4 GiB, 2 vCPUs
+      IP   = "10.0.2.23"
+    }
+    "nfs" = {
+      size = "Standard_B2s" # 4 GiB, 2 vCPUs
+      IP   = "10.0.2.30"
+    }
   }
 }

@@ -1,0 +1,8 @@
+---
+# vars file for nodes-preconfig
+VERSION: '1.24'
+OS: 'CentOS_8_Stream'
+
+sdn_ports:
+  - 8285/udp
+  - 8472/udp

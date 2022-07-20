@@ -1,0 +1,4 @@
+- name: 'Aplying Network Politics definition'
+  shell: kubectl apply -f https://docs.projectcalico.org/manifests/canal.yaml
+  become: false
+  notify: Reboot

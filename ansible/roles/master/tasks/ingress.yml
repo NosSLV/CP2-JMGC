@@ -1,0 +1,4 @@
+- name: 'Installing Ingress Controller (HAProxy)'
+  shell: kubectl apply -f https://raw.githubusercontent.com/haproxytech/kubernetes-ingress/master/deploy/haproxy-ingress.yaml
+  become: false
+  notify: Reboot

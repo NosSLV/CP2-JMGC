@@ -1,0 +1,12 @@
+---
+# handlers file for master
+
+- name: Reload Firewall
+  systemd:
+    name: firewalld
+    state: restarted
+
+- name: Reboot
+  reboot:
+    pre_reboot_delay: 3
+    msg: 'Restarting initiated by Ansible'

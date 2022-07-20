@@ -1,0 +1,12 @@
+---
+# handlers file for nodes
+
+- name: Reload Firewall
+  systemd:
+    name: firewalld
+    state: restarted
+
+# Loads from all files referenced at boot time,
+# this includes /etc/sysctl.conf and /etc/sysctl.d/*.conf
+- name: sysctl system
+  shell: sysctl --system

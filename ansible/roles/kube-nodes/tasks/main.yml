@@ -1,0 +1,18 @@
+---
+# tasks file for nodes preconfiguration
+
+- name: 'Configuration: bridged traffic'
+  include_tasks:
+    file: config_traffic.yml
+
+- name: 'Disable SWAP'
+  include_tasks:
+    file: disable_swap.yml
+
+- name: 'Installing CRI-O'
+  include_tasks:
+    file: install_crio.yml
+
+- name: 'Installing Kubernetes'
+  include_tasks:
+    file: install_kubernetes.yml

@@ -1,0 +1,10 @@
+- name: 'disable SWAP'
+  command: swapoff -a
+  changed_when: true
+  when: ansible_swaptotal_mb > 0
+
+- name: 'Disable SWAP in fstab'
+  lineinfile:
+    path: /etc/fstab
+    regexp: '\sswap\s'
+    state: absent

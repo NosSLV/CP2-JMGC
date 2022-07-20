@@ -20,22 +20,23 @@ resource "azurerm_subnet" "subnet" {
 }
 
 resource "azurerm_network_interface" "nic" {
-  for_each = var.vms
-  name     = "VM-NIC-${each.key}"
+  for_each            = var.vms
+  name                = "VM-NIC-${each.key}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name                          = "ip_config-${each.key}"
-    subnet_id                     = azurerm_subnet.subnet.id
-    private_ip_address_allocation = "Dynamic"
+    name      = "ip_config-${each.key}"
+    subnet_id = azurerm_subnet.subnet.id
+    private_ip_address_allocation = "Static"
+    private_ip_address            = each.value.IP
     public_ip_address_id          = azurerm_public_ip.public_ip[each.key].id
   }
 }
 
 resource "azurerm_public_ip" "public_ip" {
-  for_each = var.vms
-  name     = "PublicIP-${each.key}"
+  for_each            = var.vms
+  name                = "PublicIP-${each.key}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   allocation_method   = "Dynamic"
@@ -48,8 +49,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
   name                = "VM-${each.key}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  size                = each.value
-  admin_username = var.admin_user
+  size                = each.value.size
+  admin_username      = var.admin_user
   network_interface_ids = [
     azurerm_network_interface.nic[each.key].id,
   ]
@@ -80,8 +81,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
 /// Security Resources ///
 resource "azurerm_network_security_group" "sg" {
-  for_each = var.vms
-  name     = "SG-${each.key}"
+  for_each            = var.vms
+  name                = "SG-${each.key}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 

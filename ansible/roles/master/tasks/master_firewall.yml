@@ -1,0 +1,16 @@
+- name: 'Firewall: Open Ports'
+  firewalld:
+    port: '{{item}}'
+    permanent: yes
+    state: enabled
+    immediate: yes
+  with_items: '{{ ports }}'
+  notify: Reload Firewall
+
+- name: 'Firewall: Whitelist workers'
+  firewalld:
+    rich_rule: rule family=ipv4 source address={{ hostvars[item].private_ip }}/32 accept
+    permanent: true
+    state: enabled
+  with_items: "{{ groups['workers'] }}"
+  notify: Reload Firewall

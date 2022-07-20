@@ -1,0 +1,22 @@
+---
+# tasks file for worker
+
+- name: 'Firewall: Open UDP and TCP Ports'
+  firewalld:
+    port: '{{item}}'
+    permanent: yes
+    state: enabled
+    immediate: yes
+  with_items: '{{ worker_ports }}'
+  notify: Reload Firewall
+
+- name: 'Kubernetes: Copying token command'
+  copy:
+    src: ./roles/worker/files/kubeadm-token
+    dest: /home/{{ admin_user }}/kubeadm-token
+    owner: '{{ admin_user }}'
+    group: '{{ admin_user }}'
+    mode: 0755
+
+- name: 'Kubernetes: Adding worker to cluster'
+  shell: ./kubeadm-token

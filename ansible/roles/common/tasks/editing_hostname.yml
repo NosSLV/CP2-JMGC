@@ -1,0 +1,11 @@
+- name: 'Setting Domain Names'
+  hostname:
+    name: '{{ domain_name }}'
+    use: systemd
+
+- name: 'Generate /etc/hosts'
+    template:
+      src: templates/hosts.j2
+      dest: /etc/hosts
+      owner: root
+      mode: '0644'

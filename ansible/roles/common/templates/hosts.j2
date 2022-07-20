@@ -1,0 +1,13 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+# CP2
+{% set domain = ".unir.com" %}
+{% for master in groups['master'] %}
+{{ hostvars[master].private_ip }} {{ hostvars[master].domain_name }}{{ domain }} {{ hostvars[master].domain_name }}
+{% endfor %}
+{% for worker in groups['workers'] %}
+{{ hostvars[worker].private_ip }} {{ hostvars[worker].domain_name }}{{ domain }} {{ hostvars[worker].domain_name }}
+{% endfor %}
+{% for nfs in groups['nfs'] %}
+{{ hostvars[nfs].private_ip }} {{ hostvars[nfs].domain_name }}{{ domain }} {{ hostvars[nfs].domain_name }}
+{% endfor %}

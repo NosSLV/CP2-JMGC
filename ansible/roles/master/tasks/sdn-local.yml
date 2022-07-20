@@ -1,0 +1,20 @@
+# Use only to deploy an SDN locally
+
+- name: 'SDN-Local: Instalar operador Tigera'
+  shell: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+  become: false
+
+- name: 'SDN-Local: Downloading CR definition' # Mejor usar get_url o uri module
+  uri:
+    url: https://docs.projectcalico.org/manifests/custom-resources.yaml
+    dest: .
+
+# Not needed if you are using CIDR = 192.168.0.0/16
+#- name: 'Local: Modifying CIDR with Pods network'
+#  copy:
+#    src: /roles/master/custom-resources.yaml
+#    dest: ./custom-resources.yaml
+
+- name: 'SDN-Local: Kubectl apply'
+  shell: kubectl apply -f custom-resources.yaml
+  become: false

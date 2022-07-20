@@ -1,0 +1,15 @@
+- name: Preliminary VMs configuration
+  import_playbook: playbook-common.yml
+
+- name: Kubernetes Config in Nodes
+  import_playbook: playbook-kube-nodes.yml
+#- name: NFS Config
+#  import_playbook: playbook-nfs.yml
+
+- name: Finish Config Master, SDN & Ingress
+  import_playbook: playbook-master.yml
+
+- name: Finish Config Workers
+  import_playbook: playbook-worker.yml
+#- name: Config and deploy APP
+#  import_playbook: playbook-app.yml

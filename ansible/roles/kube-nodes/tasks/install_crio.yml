@@ -1,0 +1,30 @@
+- name: 'CRI-O: Repo 1'
+  uri:
+    url: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{ OS }}/devel:kubic:libcontainers:stable.repo
+    dest: /etc/yum.repos.d/devel:kubic:libcontainers:stable.repo
+
+- name: 'CRI-O: Repo 2'
+  uri:
+    url: https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ VERSION }}/{{ OS }}/devel:kubic:libcontainers:stable:cri-o:{{ VERSION }}.repo
+    dest: /etc/yum.repos.d/devel:kubic:libcontainers:stable:cri-o:{{ VERSION }}.repo
+
+- name: 'Installing CRI-O'
+  dnf:
+    name: cri-o
+    state: latest
+
+- name: 'Update crio.conf'
+  lineinfile:
+    dest: /etc/modules-load.d/crio.conf
+    line: '{{item}}'
+    state: present
+    create: yes
+  with_items:
+    - 'overlay'
+    - 'br_netfilter'
+
+- name: 'Enable CRI-O service'
+  systemd:
+    name: crio
+    state: started
+    enabled: yes

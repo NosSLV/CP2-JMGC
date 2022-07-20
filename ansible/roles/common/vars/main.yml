@@ -1,0 +1,9 @@
+---
+# vars file for common
+zone: 'Europe/Madrid'
+rpms:
+  - chrony
+  - firewalld
+services:
+  - chronyd
+  - firewalld

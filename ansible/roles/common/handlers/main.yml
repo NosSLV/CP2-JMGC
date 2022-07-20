@@ -1,0 +1,6 @@
+---
+# handlers file for common
+- name: Reboot
+  reboot:
+    pre_reboot_delay: 3
+    msg: 'Restarting initiated by Ansible'
