@@ -1,2 +1,45 @@
 ---
 # tasks file for nfs
+
+- name: 'Installing needed tools'
+  dnf:
+    name: nfs-utils
+    state: present
+
+- name: 'Making NFS directory'
+  file:
+    path: '{{ directory }}'
+    state: directory
+    owner: nobody
+    mode: 0777
+
+- name: 'Update /etc/exports'
+  lineinfile:
+    dest: /etc/exports
+    line: '{{ directory }}  {{ subnet_cidr }}(rw,sync,no_subtree_check)'
+    state: present
+    create: yes
+
+- name: 'Starting services: nfs-server'
+  systemd:
+    name: nfs-server
+    state: started
+    enabled: yes
+
+- name: 'Exporting file system'
+  shell: exportfs -arv
+
+- name: 'Verifying exported file system'
+  shell: exportfs -s
+
+- name: 'Firewall: Open traffic to services'
+  firewalld:
+    service: '{{item}}'
+    permanent: yes
+    state: enabled
+    immediate: yes
+  with_items:
+    - nfs
+    - rpc-bind
+    - mountd
+  notify: Reload Firewall

@@ -1,2 +1,7 @@
 ---
 # handlers file for nfs
+
+- name: Reload Firewall
+  systemd:
+    name: firewalld
+    state: restarted
