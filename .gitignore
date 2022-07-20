@@ -2,4 +2,3 @@ terraform/.terraform*
 old
 playbook-debug.yml
 kubeadm-token
-custom-resources.yaml
