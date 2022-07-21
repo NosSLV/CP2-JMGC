@@ -1,7 +1,7 @@
 /// Resource Group ///
 resource "azurerm_resource_group" "rg" {
   name     = var.resource_group_name
-  location = var.location_name
+  location = var.location
 }
 
 /// Network Resources ///
@@ -26,8 +26,8 @@ resource "azurerm_network_interface" "nic" {
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name      = "ip_config-${each.key}"
-    subnet_id = azurerm_subnet.subnet.id
+    name                          = "ip_config-${each.key}"
+    subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Static"
     private_ip_address            = each.value.IP
     public_ip_address_id          = azurerm_public_ip.public_ip[each.key].id
@@ -50,13 +50,13 @@ resource "azurerm_linux_virtual_machine" "vm" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = each.value.size
-  admin_username      = var.admin_user
+  admin_username      = var.ssh_user
   network_interface_ids = [
     azurerm_network_interface.nic[each.key].id,
   ]
 
   admin_ssh_key {
-    username   = var.admin_user
+    username   = var.ssh_user
     public_key = file(var.public_key_path)
   }
 
@@ -85,18 +85,21 @@ resource "azurerm_network_security_group" "sg" {
   name                = "SG-${each.key}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
+}
 
-  security_rule {
-    name                       = "SSH"
-    priority                   = 1001
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "22"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
+resource "azurerm_network_security_rule" "ssh" {
+  for_each                    = var.vms
+  name                        = "SSH"
+  priority                    = 1001
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.sg[each.key].name
 }
 
 resource "azurerm_network_interface_security_group_association" "sg_association" {

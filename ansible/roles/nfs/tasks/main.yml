@@ -1,16 +1,17 @@
 ---
 # tasks file for nfs
 
-- name: 'Installing needed tools'
-  dnf:
+- name: 'Checking needed tools'
+  yum:
     name: nfs-utils
-    state: present
+    state: latest
 
 - name: 'Making NFS directory'
   file:
     path: '{{ directory }}'
     state: directory
     owner: nobody
+    group: nobody
     mode: 0777
 
 - name: 'Update /etc/exports'

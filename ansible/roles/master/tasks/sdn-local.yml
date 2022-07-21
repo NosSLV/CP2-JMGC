@@ -9,7 +9,7 @@
     url: https://docs.projectcalico.org/manifests/custom-resources.yaml
     dest: .
 
-# Not needed if you are using CIDR = 192.168.0.0/16
+# Uncomment this if you are NOT using default CIDR = 192.168.0.0/16
 #- name: 'Local: Modifying CIDR with Pods network'
 #  copy:
 #    src: /roles/master/custom-resources.yaml

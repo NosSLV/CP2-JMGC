@@ -1,8 +1,5 @@
-- name: '2 - Nodes Configuration'
+- name: '3 - Nodes Configuration'
   hosts: master,workers
-  remote_user: '{{ admin_user }}'
   become: true
-  vars_files:
-    - ansible_vars.yml
   roles:
     - kube-nodes

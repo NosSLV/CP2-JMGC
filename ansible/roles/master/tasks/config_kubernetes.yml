@@ -13,17 +13,17 @@
 
 - name: 'Autorizing cluster access: Create directory ".kube"'
   file:
-    path: /home/{{ admin_user }}/.kube
+    path: /home/{{ ansible_user }}/.kube
     state: directory
-    owner: '{{ admin_user }}'
-    group: '{{ admin_user }}'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
     mode: 0755
 
 - name: 'Autorizing cluster access: Copying "config" file'
   copy:
     remote_src: yes
     src: /etc/kubernetes/admin.conf
-    dest: /home/{{ admin_user }}/.kube/config
-    owner: '{{ admin_user }}'
-    group: '{{ admin_user }}'
+    dest: /home/{{ ansible_user }}/.kube/config
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
     mode: 0755

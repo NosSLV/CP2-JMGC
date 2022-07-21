@@ -4,20 +4,26 @@ variable "resource_group_name" {
   default     = "rg-byterraform"
 }
 
-variable "location_name" {
+variable "location" {
   description = "Azure Location"
   default     = "uksouth"
 }
 
-variable "admin_user" {
-  description = "Default admin and SSH user"
-  default     = "azureadmin"
+variable "storage_account" {
+  description = "storage account name"
+  type        = string
+  default     = "storage_acc_nos"
 }
 
 variable "public_key_path" {
   description = "Public Key path used by VMs to allow connections from host machine"
   type        = string
   default     = "~/.ssh/id_rsa.pub"
+}
+
+variable "ssh_user" {
+  description = "Admin and SSH user"
+  default     = "azureadmin"
 }
 
 /// Network ///

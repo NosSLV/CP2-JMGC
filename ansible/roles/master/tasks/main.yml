@@ -11,7 +11,7 @@
 
 - name: 'SDN'
   include_tasks:
-    file: sdn-local.yml # Change it to "sdn-local.yml" if you want to deploy SDN locally
+    file: sdn.yml # Change it to "sdn-local.yml" if you are doing a local deploy
 
 - name: 'Ingress'
   include_tasks:

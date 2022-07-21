@@ -13,9 +13,9 @@
 - name: 'Kubernetes: Copying token command'
   copy:
     src: ./roles/worker/files/kubeadm-token
-    dest: /home/{{ admin_user }}/kubeadm-token
-    owner: '{{ admin_user }}'
-    group: '{{ admin_user }}'
+    dest: /home/{{ ansible_user }}/kubeadm-token
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
     mode: 0755
 
 - name: 'Kubernetes: Adding worker to cluster'

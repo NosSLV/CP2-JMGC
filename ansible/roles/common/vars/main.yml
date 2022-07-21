@@ -4,6 +4,8 @@ zone: 'Europe/Madrid'
 rpms:
   - chrony
   - firewalld
+  - nfs-utils # needed for NFS
+  - nfs4-acl-tools # needed for NFS
 services:
   - chronyd
   - firewalld

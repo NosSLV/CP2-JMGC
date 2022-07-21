@@ -1,8 +1,5 @@
-- name: '3 - Master Configuration'
+- name: '4 - Master Configuration'
   hosts: master
-  remote_user: '{{ admin_user }}'
   become: true
-  vars_files:
-    - ansible_vars.yml
   roles:
     - master
