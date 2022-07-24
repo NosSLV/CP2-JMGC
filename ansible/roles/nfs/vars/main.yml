@@ -1,6 +1,6 @@
 ---
 # vars file for nfs
 
-directory: /mnt/nfs
+nfs_dir: /mnt/nfs
 
 subnet_cidr: 10.0.2.0/24

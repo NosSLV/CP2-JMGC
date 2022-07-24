@@ -8,7 +8,7 @@
 
 - name: 'Making NFS directory'
   file:
-    path: '{{ directory }}'
+    path: '{{ nfs_dir }}'
     state: directory
     owner: nobody
     group: nobody
@@ -17,7 +17,7 @@
 - name: 'Update /etc/exports'
   lineinfile:
     dest: /etc/exports
-    line: '{{ directory }}  {{ subnet_cidr }}(rw,sync,no_subtree_check)'
+    line: '{{ nfs_dir }}  {{ subnet_cidr }}(rw,sync,no_subtree_check)'
     state: present
     create: yes
 
@@ -44,3 +44,7 @@
     - rpc-bind
     - mountd
   notify: Reload Firewall
+
+- name: 'APP'
+  include_tasks:
+    file: add_app.yml

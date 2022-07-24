@@ -1,7 +1,7 @@
 ---
 # tasks file for common
 
-- name: 'Editing hostname and updating hosts'
+- name: 'Updating hostname and hosts'
   include_tasks:
     file: editing_hostname.yml
 
@@ -9,13 +9,10 @@
   timezone:
     name: '{{ zone }}'
 
-#- name: Enable NTP
-#  command: /usr/bin/timedatectl set-ntp true
-
-- name: 'Installing rpms and enabling services'
+- name: 'rpms and services'
   include_tasks:
     file: rpms_services.yml
 
-- name: 'Disable SELinux'
+- name: 'SELinux'
   include_tasks:
     file: disable_selinux.yml

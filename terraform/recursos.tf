@@ -102,6 +102,25 @@ resource "azurerm_network_security_rule" "ssh" {
   network_security_group_name = azurerm_network_security_group.sg[each.key].name
 }
 
+resource "azurerm_network_security_rule" "ingress" {
+   for_each = {
+    for key, value in var.vms :
+    key => value
+    if key == "master"
+  }
+  name                        = "Ingress"
+  priority                    = 1002
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "30000-32767"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.sg[each.key].name
+}
+
 resource "azurerm_network_interface_security_group_association" "sg_association" {
   for_each                  = var.vms
   network_interface_id      = azurerm_network_interface.nic[each.key].id

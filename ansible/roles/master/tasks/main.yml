@@ -1,11 +1,17 @@
 ---
 # tasks file for master
 
-- name: 'Configuring Firewall'
+- name: 'Ansible: Installing k8s module pre-requisites'
+  pip:
+    name:
+      - openshift
+      - pyyaml
+
+- name: 'Firewall'
   include_tasks:
     file: master_firewall.yml
 
-- name: 'Configuring Kubernetes'
+- name: 'Kubernetes'
   include_tasks:
     file: config_kubernetes.yml
 

@@ -1,6 +1,6 @@
 # Use only to deploy an SDN locally
 
-- name: 'SDN-Local: Instalar operador Tigera'
+- name: 'SDN-Local: Installing Tigera operator'
   shell: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
   become: false
 

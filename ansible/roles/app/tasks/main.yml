@@ -1,2 +1,29 @@
 ---
 # tasks file for app
+
+- name: 'APP: Create directory'
+  file:
+    path: '{{ app_dir }}'
+    state: directory
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: 0755
+
+- name: 'APP: Copy configs'
+  copy:
+    src: '{{ item }}'
+    dest: '{{ app_dir }}'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: 0755
+  with_items:
+    - app-configmap.yml
+    - app-ingress_controller.yml
+    - app-pv.yml
+    - app-pvc.yml
+    - app-service.yml
+    - app.yml
+
+- name: 'APP Deploy'
+  include_tasks:
+    file: app_deploy.yml

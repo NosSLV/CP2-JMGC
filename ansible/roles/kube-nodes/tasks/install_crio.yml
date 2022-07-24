@@ -8,12 +8,12 @@
     url: https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ VERSION }}/{{ OS }}/devel:kubic:libcontainers:stable:cri-o:{{ VERSION }}.repo
     dest: /etc/yum.repos.d/devel:kubic:libcontainers:stable:cri-o:{{ VERSION }}.repo
 
-- name: 'Installing CRI-O'
+- name: 'CRI-O: Installing'
   dnf:
     name: cri-o
     state: latest
 
-- name: 'Update crio.conf'
+- name: 'CRI-O: Enable Kernel Modules'
   lineinfile:
     dest: /etc/modules-load.d/crio.conf
     line: '{{item}}'

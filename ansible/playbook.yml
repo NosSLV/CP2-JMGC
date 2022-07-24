@@ -12,5 +12,6 @@
 
 - name: Configuring kubernetes on Workers
   import_playbook: playbook-worker.yml
-#- name: Config and deploy APP
-#  import_playbook: playbook-app.yml
+
+- name: Config and deploy APP
+  import_playbook: playbook-app.yml

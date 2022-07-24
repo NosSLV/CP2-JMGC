@@ -1,0 +1,7 @@
+- name: 'APP: Copying index.html'
+  copy:
+    src: '{{ item }}'
+    dest: '{{ nfs_dir }}'
+    mode: 0644
+  with_items:
+    - index.html

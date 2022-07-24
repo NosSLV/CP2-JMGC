@@ -1,0 +1,52 @@
+- name: 'APP: Creating namespace'
+  k8s:
+    api_version: v1
+    name: app-web
+    kind: Namespace
+    state: present
+  become: false
+
+- name: 'APP: Adding NFS IP and directory to yaml'
+  lineinfile:
+    dest: '{{ app_dir }}/app-pv.yml'
+    line: '{{item}}'
+    state: present
+  with_items:
+    - '    path: {{ nfs_dir }}'
+    - "    server: {{ hostvars[groups['nfs'][0]]['private_ip'] }}"
+
+- name: 'APP: Persistent Volume'
+  k8s:
+    state: present
+    src: '{{ app_dir }}/app-pv.yml'
+  become: false
+
+- name: 'APP: Persistent Volume Claim'
+  k8s:
+    state: present
+    src: '{{ app_dir }}/app-pvc.yml'
+  become: false
+
+- name: 'APP: Deployment'
+  k8s:
+    state: present
+    src: '{{ app_dir }}/app.yml'
+  become: false
+
+- name: 'APP: Service'
+  k8s:
+    state: present
+    src: '{{ app_dir }}/app-service.yml'
+  become: false
+
+- name: 'APP: Ingress Controller'
+  k8s:
+    state: present
+    src: '{{ app_dir }}/app-ingress_controller.yml'
+  become: false
+
+- name: 'APP: ConfigMap'
+  k8s:
+    state: present
+    src: '{{ app_dir }}/app-configmap.yml'
+  become: false

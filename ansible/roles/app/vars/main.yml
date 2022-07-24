@@ -1,2 +1,6 @@
 ---
 # vars file for app
+
+nfs_dir: /mnt/nfs
+
+app_dir: /home/{{ ansible_user }}/app

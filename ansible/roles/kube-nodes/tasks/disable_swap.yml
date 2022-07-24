@@ -1,4 +1,4 @@
-- name: 'disable SWAP'
+- name: 'Disable SWAP'
   command: swapoff -a
   changed_when: true
   when: ansible_swaptotal_mb > 0

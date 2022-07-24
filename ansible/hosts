@@ -3,10 +3,10 @@ ansible_user=azureadmin
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [master]
-20.0.48.125 domain_name=kubmaster private_ip=10.0.2.22
+20.254.91.164 domain_name=kubmaster private_ip=10.0.2.22
 
 [workers]
-20.254.56.163 domain_name=kubworker private_ip=10.0.2.23
+51.142.101.112 domain_name=kubworker private_ip=10.0.2.23
 
 [nfs]
-20.26.195.14 domain_name=nfsserver private_ip=10.0.2.30
+51.142.102.135 domain_name=nfsserver private_ip=10.0.2.30

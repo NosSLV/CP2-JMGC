@@ -1,5 +1,5 @@
 - name: '5 - App Configuration'
-  hosts: workers
+  hosts: master
   become: true
   roles:
     - app

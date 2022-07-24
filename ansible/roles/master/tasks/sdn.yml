@@ -1,4 +1,12 @@
+- name: 'SDN: Downloading manifest'
+  get_url:
+    url: https://docs.projectcalico.org/manifests/canal.yaml
+    dest: /home/{{ ansible_user }}/canal.yaml
+    mode: 0664
+
 - name: 'SDN: Aplying Network Politics definition'
-  shell: kubectl apply -f https://docs.projectcalico.org/manifests/canal.yaml
+  k8s:
+    state: present
+    src: /home/{{ ansible_user }}/canal.yaml
   become: false
   notify: Reboot

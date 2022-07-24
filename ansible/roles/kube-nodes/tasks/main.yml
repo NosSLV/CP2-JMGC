@@ -5,14 +5,14 @@
   include_tasks:
     file: config_traffic.yml
 
-- name: 'Disable SWAP'
+- name: 'SWAP'
   include_tasks:
     file: disable_swap.yml
 
-- name: 'Installing CRI-O'
+- name: 'CRI-O'
   include_tasks:
     file: install_crio.yml
 
-- name: 'Installing Kubernetes'
+- name: 'Kubernetes'
   include_tasks:
     file: install_kubernetes.yml

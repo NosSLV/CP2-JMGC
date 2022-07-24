@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: haproxy-configmap
+  namespace: app-web
+data:
+  servers-increment: '42'
+  ssl-redirect: 'OFF'

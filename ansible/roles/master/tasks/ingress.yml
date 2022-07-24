@@ -1,4 +1,12 @@
-- name: 'Ingress: Installing Ingress Controller (HAProxy)'
-  shell: kubectl apply -f https://raw.githubusercontent.com/haproxytech/kubernetes-ingress/master/deploy/haproxy-ingress.yaml
+- name: 'Ingress: Downloading HAProxy kubernetes Ingress'
+  get_url:
+    url: https://raw.githubusercontent.com/haproxytech/kubernetes-ingress/master/deploy/haproxy-ingress.yaml
+    dest: /home/{{ ansible_user }}/haproxy-ingress.yaml
+    mode: 0664
+
+- name: 'Ingress: Aplying HAProxy kubernetes Ingress'
+  k8s:
+    state: present
+    src: /home/{{ ansible_user }}/haproxy-ingress.yaml
   become: false
   notify: Reboot
