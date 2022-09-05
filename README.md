@@ -2,7 +2,7 @@
 
 ## Infraestructure to deploy
 
-![image-20220725134023528](https://i.postimg.cc/pT7Kbbwr/imagen.png)
+![image-20220725134023528](https://i.imgur.com/O2FgGQ2.png)
 
 ## What is used
 
